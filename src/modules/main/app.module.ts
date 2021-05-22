@@ -6,9 +6,15 @@ import { ConfigModule } from '../config/config.module';
 import { DatabaseModule } from '../database/database.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UrlModule } from 'modules/url/url.module';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, TypeOrmModule.forFeature([])],
+  imports: [
+    ConfigModule,
+    DatabaseModule,
+    TypeOrmModule.forFeature([]),
+    UrlModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
