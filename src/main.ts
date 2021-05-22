@@ -11,13 +11,13 @@ declare const module: any;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   const logger = new Logger('Main', true);
-  const globalPrefix = '/api';
-
-  setupSwagger(app);
+  const globalPrefix = '';
 
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix(globalPrefix);
   app.use(loggerMiddleware);
+
+  setupSwagger(app);
 
   await app.listen(AppModule.port);
 
@@ -35,6 +35,7 @@ async function bootstrap() {
     'localhost';
   const url = `http://${baseUrl}:${AppModule.port}${globalPrefix}`;
   logger.log(`Listening to ${url}`);
-  AppModule.isDev && logger.log(`API Documentation available at ${url}/docs`);
+  AppModule.isDev &&
+    logger.log(`API Documentation available at ${url}/api/docs`);
 }
 bootstrap();

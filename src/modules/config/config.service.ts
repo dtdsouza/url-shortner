@@ -1,7 +1,6 @@
 import { parse, DotenvParseOutput } from 'dotenv';
 import { readFileSync } from 'fs';
 import * as Joi from 'joi';
-import { ConnectionOptions } from 'typeorm';
 
 export class ConfigService {
   private readonly envConfig: DotenvParseOutput;
