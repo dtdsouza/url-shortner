@@ -1,8 +1,16 @@
-import { Controller, Post, HttpStatus, Body, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  HttpStatus,
+  Body,
+  Get,
+  Param,
+  Res,
+} from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
+import { Response } from 'express';
 import { CreateShortUrlResponseDto } from './dto/create-url-response.dto';
 import { CreateShortUrlDto } from './dto/create-url.dto';
-import { GetShortUrlResponseDto } from './dto/get-url-response.dto';
 import { UrlService } from './url.service';
 
 @Controller('')
@@ -26,14 +34,20 @@ export class UrlController {
 
   @Get('/:shortUrl')
   @ApiResponse({
-    status: HttpStatus.ACCEPTED,
+    status: HttpStatus.PERMANENT_REDIRECT,
     description: 'Successful retrieved url.',
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
     description: 'Not Found.',
   })
-  show(@Param('shortUrl') shortUrl: string): Promise<GetShortUrlResponseDto> {
-    return this.urlService.show(shortUrl);
+  async show(
+    @Param('shortUrl') shortUrl: string,
+    @Res() res: Response,
+  ): Promise<void> {
+    return res.redirect(
+      HttpStatus.PERMANENT_REDIRECT,
+      (await this.urlService.show(shortUrl)).url,
+    );
   }
 }

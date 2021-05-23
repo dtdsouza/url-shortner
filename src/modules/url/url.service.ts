@@ -5,13 +5,12 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateShortUrlDto } from './dto/create-url.dto';
-import { UrlEntity } from './model/url.entity';
 import { UrlRepository } from './model/url.repository';
 import { CreateShortUrlResponseDto } from './dto/create-url-response.dto';
 import { GetShortUrlResponseDto } from './dto/get-url-response.dto';
 import { ConfigService } from '../config/config.service';
+import { MoreThan } from 'typeorm';
 import * as faker from 'faker';
-import { LessThan, MoreThan } from 'typeorm';
 
 @Injectable()
 export class UrlService {
@@ -41,7 +40,12 @@ export class UrlService {
     return this.generateShortUrl(++tries);
   }
 
+  private normalizeUrl(url: string): string {
+    return url.includes('http') ? url : `http://${url}`;
+  }
+
   async store(data: CreateShortUrlDto): Promise<CreateShortUrlResponseDto> {
+    data.url = this.normalizeUrl(data.url);
     const haveShortedAlready = await this.urlRepository.findOne({
       where: {
         originalUrl: data.url,
