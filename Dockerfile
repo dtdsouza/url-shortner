@@ -1,15 +1,13 @@
-FROM node:alpine
+FROM node:10.16.2
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Install app dependencies
-COPY package.json .
-COPY yarn.lock .
-RUN yarn && yarn cache clean
+ENV NODE_ENV development
+COPY package.json yarn.lock ./
+RUN yarn
 
-# Bundle app source
 COPY . .
 
-# Expose port and start application
 EXPOSE 8080
-CMD ["yarn", "start"]
+
+CMD [ "yarn", "start:dev" ]
