@@ -23,7 +23,7 @@ export class AppModule {
   static isDev: boolean;
 
   constructor(private readonly config: ConfigService) {
-    AppModule.port = config.get('API_PORT');
+    AppModule.port = config.get('PORT');
     AppModule.isDev = config.isDev;
   }
 }
