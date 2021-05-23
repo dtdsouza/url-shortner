@@ -9,7 +9,9 @@ node_modules/
 *.log
 
 # environment
-.env*
+.env.development
+.env.production
+.env.test
 
 # build
 /dist
