@@ -1,9 +1,8 @@
-import { IsString, IsUrl } from 'class-validator';
+import { IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateShortUrlDto {
+export class GetShortUrlResponseDto {
   @IsString()
-  @IsUrl()
   @ApiProperty({ type: String })
   url!: string;
 }
