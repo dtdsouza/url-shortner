@@ -34,7 +34,7 @@ export class UrlController {
 
   @Get('/:shortUrl')
   @ApiResponse({
-    status: HttpStatus.PERMANENT_REDIRECT,
+    status: HttpStatus.MOVED_PERMANENTLY,
     description: 'Successful retrieved url.',
   })
   @ApiResponse({
@@ -46,7 +46,7 @@ export class UrlController {
     @Res() res: Response,
   ): Promise<void> {
     return res.redirect(
-      HttpStatus.PERMANENT_REDIRECT,
+      HttpStatus.MOVED_PERMANENTLY,
       (await this.urlService.show(shortUrl)).url,
     );
   }

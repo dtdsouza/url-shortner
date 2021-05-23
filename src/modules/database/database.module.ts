@@ -22,6 +22,7 @@ import { ConfigService } from '../config/config.service';
           synchronize: config.isDev,
           logging: !config.isProd,
           useNewUrlParser: true,
+          keepConnectionAlive: true,
         } as TypeOrmModuleOptions),
     }),
   ],
